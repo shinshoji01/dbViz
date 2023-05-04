@@ -1,0 +1,6 @@
+imageio==2.9.0
+ipyplot==1.1.0
+networkx==2.6.3
+pywavelets==1.1.1
+scikit-image==0.18.3
+tifffile==2021.10.12

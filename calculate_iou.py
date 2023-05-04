@@ -49,6 +49,10 @@ for p in sorted(os.listdir(args.load_net)):
             for s in sorted(os.listdir(os.path.join(args.load_net, p, q))):
                 group_paths.append(os.path.join(args.load_net, p, q, s))
             groups.append(group_paths)
+print(groups)
+p = os.listdir(args.load_net)[0]
+print(p)
+print(sorted(os.listdir(os.path.join(args.load_net, p))))
 
 #groups = [[os.path.join(args.load_net, p, q) for q in sorted(os.listdir(os.path.join(args.load_net, p)))] for p in sorted(os.listdir(args.load_net)) if 'predictions' in p]
 iou_mat = torch.zeros((len(groups), len(groups)))

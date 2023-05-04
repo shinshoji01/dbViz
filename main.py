@@ -124,24 +124,32 @@ if args.load_net is None:
         # Save checkpoint.
         if test_acc > best_acc:
             print(f'The best epoch is: {epoch}')
-            os.makedirs(f'saved_models/{args.train_mode}/{str(args.set_seed)}', exist_ok=True)
-            if args.extra_path != None:
-                os.makedirs(save_path, exist_ok=True)
-                print(f'{save_path}/{args.save_net}.pth')
-                if torch.cuda.device_count() > 1:
-                    state_dict = net.module.state_dict()
-                else:
-                    state_dict = net.state_dict()
-                torch.save(state_dict, f'{save_path}/{args.save_net}.pth')
-                
+            save_dir = f"{args.save_net}/{args.net}"
+            os.makedirs(save_dir, exist_ok=True)
+            #if args.extra_path != None:
+            #    os.makedirs(save_path, exist_ok=True)
+            #    print(f'{save_path}/{args.save_net}.pth')
+            #    if torch.cuda.device_count() > 1:
+            #        state_dict = net.module.state_dict()
+            #    else:
+            #        state_dict = net.state_dict()
+            #    torch.save(state_dict, f'{save_path}/{args.save_net}.pth')
+            #    
+            #else:
+            #    save_path = f'saved_models/{args.train_mode}/{str(args.set_seed)}/{args.save_net}.pth'
+            #    print(save_path)
+
+            #    if torch.cuda.device_count() > 1:
+            #        torch.save(net.module.state_dict(), save_path)
+            #    else:
+            #        torch.save(net.state_dict(), save_path)
+            save_path = f'{save_dir}/{str(args.set_seed)}.pth'
+            print(save_path)
+
+            if torch.cuda.device_count() > 1:
+                torch.save(net.module.state_dict(), save_path)
             else:
-                print(f'saved_models/{args.train_mode}/{str(args.set_seed)}/{args.save_net}.pth')
-                if torch.cuda.device_count() > 1:
-                    torch.save(net.module.state_dict(),
-                               f'saved_models/{args.train_mode}/{str(args.set_seed)}/{args.save_net}.pth')
-                else:
-                    torch.save(net.state_dict(),
-                               f'saved_models/{args.train_mode}/{str(args.set_seed)}/{args.save_net}.pth')
+                torch.save(net.state_dict(), save_path)
             best_acc = test_acc
             best_epoch = epoch
 

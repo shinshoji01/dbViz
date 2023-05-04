@@ -1,0 +1,8 @@
+__pycache__/
+checkpoint/
+data/
+imgs/
+wandb/
+model_parameters/
+saved_models/
+params/

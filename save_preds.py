@@ -41,9 +41,10 @@ torch.manual_seed(args.set_data_seed)
 trainloader, testloader = get_data(args)
 
 paths = [os.path.join(args.load_net, p) for p in os.listdir(args.load_net) if 'pred' not in p]
+print(paths)
 
 for path in paths:
-    os.makedirs(os.path.join(args.load_net, path, 'predictions'), exist_ok=True)
+    os.makedirs(os.path.join(path, 'predictions'), exist_ok=True)
     for p in sorted(os.listdir(path)):
         if 'pred' not in p:
             if 'wide' in  path.lower():
@@ -62,5 +63,5 @@ for path in paths:
                 planeloader = make_planeloader(images, args)
                 preds = decision_boundary(args, net, planeloader, device)
                 pred_arr.append(torch.stack(preds).argmax(1).cpu())
-            torch.save(pred_arr, os.path.join(args.load_net, path, 'predictions') + '/' + temp_path.split('/')[-1].split('.pth')[0] + '_preds.pth')
+            torch.save(pred_arr, os.path.join(path, 'predictions') + '/' + temp_path.split('/')[-1].split('.pth')[0] + '_preds.pth')
             
