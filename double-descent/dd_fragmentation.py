@@ -43,13 +43,13 @@ if args.mixup:
 else:
     args.model_path = f'./checkpoint/{args.set_seed}/{args.set_data_seed}'
 
-#if args.active_log:
-#    import wandb
-#    if not args.mixup: 
-#        wandb.init(project="dd_fragmentation", name = f'frag_{args.noise_rate}noise_{args.k}k_{args.set_seed}')
-#    else:
-#        wandb.init(project="dd_fragmentation", name = f'frag_{args.noise_rate}noise_{args.k}k__{args.set_seed}_wmixup')
-#    wandb.config.update(args)
+if args.active_log:
+    import wandb
+    if not args.mixup: 
+        wandb.init(project="dd_fragmentation", name = f'frag_{args.noise_rate}noise_{args.k}k_{args.set_seed}')
+    else:
+        wandb.init(project="dd_fragmentation", name = f'frag_{args.noise_rate}noise_{args.k}k__{args.set_seed}_wmixup')
+    wandb.config.update(args)
 
 
 transform_train = transforms.Compose([
@@ -112,9 +112,9 @@ def num_connected_components(dlist1,dlist2, loader1,loader2, num_samples,net,dev
         ncc = connected_components(preds,args)
         cc_list.append(ncc)
         # print(dirlist,dirlist2,ncc)
-        #if i%100==0:
-            #if args.active_log:
-                #wandb.log({'iteration':i})
+        if i%100==0:
+            if args.active_log:
+                wandb.log({'iteration':i})
     return cc_list
 
 
@@ -142,8 +142,8 @@ ctrain_ctrain = []
 # ctrain_asgtest = []
 
 for class_index in range(10):
-    #if args.active_log:
-                #wandb.log({'inclass':class_index})
+    if args.active_log:
+                wandb.log({'inclass':class_index})
     l_all_train, l_mis_cls, l_corr_cls,l_all_test,l_fromcls_mislab = rel_index(class_index,trainset_noisy,testset)
     ctrain_ctrain.append(num_connected_components(l_corr_cls,l_corr_cls,trainloader,trainloader,perclass_samples,net,device,args))
     # ctrain_asgtest.append(num_connected_components(l_corr_cls,l_all_test,trainloader,testloader,perclass_samples,net,device,args))
@@ -161,8 +161,7 @@ mean_fragmentation = {
         'test_std' : np.std(alltest_alltest)
         # 'ctrain_asgtest' : np.mean(ctrain_asgtest)
 }
-#if args.active_log:
-#    wandb.log(mean_fragmentation)
-#else:
-#    print(mean_fragmentation)
-print(mean_fragmentation)
+if args.active_log:
+    wandb.log(mean_fragmentation)
+else:
+    print(mean_fragmentation)
