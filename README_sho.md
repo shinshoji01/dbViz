@@ -11,9 +11,9 @@ In thie README, you can find the basic instruction and how to create the environ
 5. `docker-compose up -d`
 6. `docker-compose exec conda bash`
 7. Go to `dbViz/` folder.
-8. `conda activate dbviz_env`
-9. `conda env create -f environment.yml`
+8. `conda env create -f environment.yml`
     1. You need to run this only once.
+9. `conda activate dbviz_env`
 10. `pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple`
     1. You need to run this only once.
 
