@@ -49,6 +49,8 @@ print(device)
 args.eval = True
 if args.mixup:
     args.model_path = './checkpoint/mixup'
+else:
+    args.model_path = f'./checkpoint/{args.set_seed}/{args.set_data_seed}'
 if args.active_log:
     import wandb
     if not args.mixup: 
