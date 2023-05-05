@@ -20,6 +20,7 @@ from models import *
 
 print('==> Building model..')
 def get_model(args, device):
+    print(args.net)
     if args.net in ['ResNet','resnet']:
         net = ResNet18()
     elif args.net in ['VGG','vgg']:
@@ -61,13 +62,13 @@ def get_model(args, device):
     return net
 
 def get_teacher_model(args, device):
-    if args.teacher_net == 'ResNet':
+    if args.teacher_net in ['ResNet', 'resnet']:
         net = ResNet18()
-    elif args.teacher_net == 'VGG':
+    elif args.teacher_net in['VGG', 'vgg']:
         net = VGG('VGG19')
     elif args.teacher_net == 'GoogLeNet':
         net = GoogLeNet()
-    elif args.teacher_net == 'DenseNet':
+    elif args.teacher_net in ['DenseNet', 'densenet']:
         net = DenseNet121()
     elif args.teacher_net == 'MobileNet':
         net = MobileNetV2()

@@ -145,7 +145,8 @@ def train_soft_distillation(args, net, trainloader, optimizer, criterion, device
         optimizer.zero_grad()
         teacher_labels = teacher(inputs)
         outputs = net(inputs)
-        loss = criterion(outputs, teacher_labels) #make sure l2 loss
+        #loss = criterion(outputs, teacher_labels) #make sure l2 loss
+        loss = torch.nn.MSELoss()(outputs, teacher_labels) #make sure l2 loss
         loss.backward()
         optimizer.step()
 

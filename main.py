@@ -40,6 +40,9 @@ torch.manual_seed(args.set_seed)
 test_accs = []
 train_accs = []
 net = get_model(args, device)
+net_name = args.net
+if args.net == "WideResNet":
+    net_name = f"WideResNet_{args.widen_factor}"
 
 test_acc, predicted = test(args, net, testloader, device, 0)
 print("scratch prediction ", test_acc)
@@ -124,7 +127,7 @@ if args.load_net is None:
         # Save checkpoint.
         if test_acc > best_acc:
             print(f'The best epoch is: {epoch}')
-            save_dir = f"{args.save_net}/{args.net}"
+            save_dir = f"{args.save_net}/{net_name}"
             os.makedirs(save_dir, exist_ok=True)
             #if args.extra_path != None:
             #    os.makedirs(save_path, exist_ok=True)
@@ -297,9 +300,9 @@ if not args.plot_animation:
     preds = decision_boundary(args, net, planeloader, device)
     from utils import produce_plot_alt,produce_plot_x,produce_plot_sepleg
 
-    net_name = args.net
-    if args.net == 'WideResNet':
-        net_name = f'WideResNet_{args.widen_factor}'
+    #net_name = args.net
+    #if args.net == 'WideResNet':
+    #    net_name = f'WideResNet_{args.widen_factor}'
     os.makedirs(f'images/{net_name}/{args.train_mode}/{sampleids}/{str(args.set_seed)}', exist_ok=True)
     # plot_path = os.path.join('images', args.net, args.train_mode, sampleids,str(args.set_seed),'best')
     # args.plot_path = os.path.join('./images', args.net, args.train_mode, sampleids, args.extra_path)
